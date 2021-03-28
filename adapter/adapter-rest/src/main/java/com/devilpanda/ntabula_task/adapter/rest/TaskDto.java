@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "Задача")
 public class TaskDto {
+    private String uuid;
     private String name;
     private String description;
     private MemberDto assigned;

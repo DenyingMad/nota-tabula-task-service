@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel(description = "Данные эпика")
 public class EpicDto {
+    private String uuid;
     private String epicName;
     private String description;
     private DetailsDto details;
