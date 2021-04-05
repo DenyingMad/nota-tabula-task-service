@@ -1,7 +1,10 @@
 package com.devilpanda.ntabula_task.adapter.rest;
 
+import com.devilpanda.ntabula_task.app.api.EpicService;
+import com.devilpanda.ntabula_task.domain.Epic;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,7 +13,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/rest/epic")
+@RequiredArgsConstructor
 public class EpicController {
+
+    private final EpicService epicService;
+    private final DtoMapper mapper;
 
     // =-----------------------------------------------------
     // CRUD
@@ -21,7 +28,8 @@ public class EpicController {
     })
     @PostMapping()
     public EpicDto createEpic() {
-        return epic();
+        Epic epic = epicService.createEpic();
+        return mapper.mapDtoFromEpic(epic);
     }
 
     @ApiResponses(value = {
