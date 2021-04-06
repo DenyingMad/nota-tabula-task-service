@@ -1,8 +1,16 @@
 package com.devilpanda.ntabula_task.adapter.rest;
 
 import com.devilpanda.ntabula_task.domain.Epic;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -10,6 +18,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,13 +27,26 @@ public class DtoMapperTest {
     private DtoMapper mapper;
     private ObjectMapper objectMapper;
 
+    @BeforeEach
+    public void setUp() {
+        mapper = new DtoMapper();
+
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setDateFormat(new SimpleDateFormat("MM-dd-yyyy"));
+        objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.setDefaultPrettyPrinter(new MyDefaultPrettyPrinter());
+    }
+
     @Test
     public void mapDtoFromEpic() {
-        Epic epic = objectFromFile("/", Epic.class);
+        Epic epic = objectFromFile("/DtoMapper/Epic.json", Epic.class);
 
         EpicDto res = mapper.mapDtoFromEpic(epic);
 
-        assertFilesEquals("/", res);
+        assertEqualsToFile("/DtoMapper/EpicDto.json", res);
     }
 
     private <T> T objectFromFile(String fileName, Class<T> objectClass) {
@@ -45,13 +67,31 @@ public class DtoMapperTest {
         }
     }
 
-    private <T> void assertFilesEquals(String fileName, T actualObject) {
+    private <T> void assertEqualsToFile(String fileName, T actualObject) {
         String expected = readFromFile(fileName);
         try {
             String actual = objectMapper.writeValueAsString(actualObject);
             assertEquals(expected, actual);
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    public static class MyDefaultPrettyPrinter extends DefaultPrettyPrinter {
+
+        public MyDefaultPrettyPrinter() {
+            this._objectIndenter = new DefaultIndenter("  ", "\n");
+            this._arrayIndenter = _objectIndenter;
+        }
+
+        @Override
+        public DefaultPrettyPrinter createInstance() {
+            return new MyDefaultPrettyPrinter();
+        }
+
+        @Override
+        public void writeObjectFieldValueSeparator(JsonGenerator g) throws IOException {
+            g.writeRaw(": ");
         }
     }
 }
