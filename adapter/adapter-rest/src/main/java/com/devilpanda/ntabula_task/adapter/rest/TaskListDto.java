@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel(description = "Список задач", parent = EpicDto.class)
 public class TaskListDto {
-    private String name;
+    private Long taskListId;
+    private String taskListName;
     private List<TaskDto> tasks;
 }

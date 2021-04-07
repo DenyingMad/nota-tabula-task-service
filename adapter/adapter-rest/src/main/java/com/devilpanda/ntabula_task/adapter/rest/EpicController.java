@@ -54,7 +54,7 @@ public class EpicController {
     @GetMapping()
     public CollectionResponseDto<EpicDto> getAllEpics() {
         List<EpicDto> list = new ArrayList<>();
-        list.add(epic());
+        //list.add(epic());
         return new CollectionResponseDto<>(list);
     }
 
@@ -63,7 +63,7 @@ public class EpicController {
     })
     @GetMapping("/{uuid}")
     public EpicDto getEpic(@PathVariable UUID uuid) {
-        return epic();
+        return null;//epic();
     }
 
     @ApiResponses(value = {
@@ -71,7 +71,7 @@ public class EpicController {
     })
     @GetMapping("/{uuid}/task/{id}")
     public TaskDto getTask(@PathVariable UUID uuid, @PathVariable Long id) {
-        return epic().getTaskLists().get(0).getTasks().get(0);
+        return null;//epic().getTaskLists().get(0).getTasks().get(0);
     }
 
 
@@ -79,25 +79,25 @@ public class EpicController {
     // Implementation
     // =-----------------------------------------------------
 
-    private EpicDto epic() {
-        // Add members
-        List<MemberDto> members = new ArrayList<>();
-        members.add(new MemberDto("Danny", "Collaborator"));
-        members.add(new MemberDto("Peter", "Viewer"));
-
-
-        List<TaskDto> firstTaskList = new ArrayList<>();
-        firstTaskList.add(new TaskDto("9b4c4090-8ff7-11eb-a8b3-0242ac130000", "SA Task 1", "Tiny description", members.get(0), 2, false));
-
-        List<TaskDto> secondTaskList = new ArrayList<>();
-        secondTaskList.add(new TaskDto("9b4c4090-8ff7-11eb-a8b3-0242ac130001", "Engine Task 1", "Tiny description", members.get(0), 3, false));
-        secondTaskList.add(new TaskDto("9b4c4090-8ff7-11eb-a8b3-0242ac130002", "Engine Task 2", "Tiny description", members.get(1), 1, false));
-
-        List<TaskListDto> list1 = new ArrayList<>();
-        list1.add(new TaskListDto("Sprint Activities", firstTaskList));
-        list1.add(new TaskListDto("Engine", secondTaskList));
-
-
-        return new EpicDto("9b4c4090-8ff7-11eb-a8b3-0242ac130003", "Epic Name", "Description of this epic", new DetailsDto(2, 4), list1, members);
-    }
+//    private EpicDto epic() {
+//        // Add members
+//        List<MemberDto> members = new ArrayList<>();
+//        members.add(new MemberDto("Danny", "Collaborator"));
+//        members.add(new MemberDto("Peter", "Viewer"));
+//
+//
+//        List<TaskDto> firstTaskList = new ArrayList<>();
+//        firstTaskList.add(new TaskDto("9b4c4090-8ff7-11eb-a8b3-0242ac130000", "SA Task 1", "Tiny description", members.get(0), 2, false));
+//
+//        List<TaskDto> secondTaskList = new ArrayList<>();
+//        secondTaskList.add(new TaskDto("9b4c4090-8ff7-11eb-a8b3-0242ac130001", "Engine Task 1", "Tiny description", members.get(0), 3, false));
+//        secondTaskList.add(new TaskDto("9b4c4090-8ff7-11eb-a8b3-0242ac130002", "Engine Task 2", "Tiny description", members.get(1), 1, false));
+//
+//        List<TaskListDto> list1 = new ArrayList<>();
+//        list1.add(new TaskListDto("Sprint Activities", firstTaskList));
+//        list1.add(new TaskListDto("Engine", secondTaskList));
+//
+//
+//        return new EpicDto("9b4c4090-8ff7-11eb-a8b3-0242ac130003", "Epic Name", "Description of this epic", new DetailsDto(2, 4), list1, members);
+//    }
 }

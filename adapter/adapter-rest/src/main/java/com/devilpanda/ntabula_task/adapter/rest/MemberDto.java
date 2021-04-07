@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "Участники эпика", parent = EpicDto.class)
+@ApiModel(description = "Участник эпика", parent = EpicDto.class)
 public class MemberDto {
-    private String name;
+    private String login;
     private String role;
 }

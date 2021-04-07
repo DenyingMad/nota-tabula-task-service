@@ -12,10 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel(description = "Данные эпика")
 public class EpicDto {
-    private String uuid;
-    private String epicName;
-    private String description;
+    private String epicId;
     private DetailsDto details;
     private List<TaskListDto> taskLists;
-    private List<MemberDto> members;
 }

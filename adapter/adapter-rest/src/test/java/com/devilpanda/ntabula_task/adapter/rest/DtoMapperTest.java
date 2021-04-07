@@ -41,12 +41,21 @@ public class DtoMapperTest {
     }
 
     @Test
-    public void mapDtoFromEpic() {
-        Epic epic = objectFromFile("/DtoMapper/Epic.json", Epic.class);
+    public void mapDtoFromEpic_full() {
+        Epic epic = objectFromFile("/DtoMapper/Epic_full.json", Epic.class);
 
         EpicDto res = mapper.mapDtoFromEpic(epic);
 
-        assertEqualsToFile("/DtoMapper/EpicDto.json", res);
+        assertEqualsToFile("/DtoMapper/EpicDto_full.json", res);
+    }
+
+    @Test
+    public void mapDtoFromEpic_empty() {
+        Epic epic = objectFromFile("/DtoMapper/Epic_empty.json", Epic.class);
+
+        EpicDto res = mapper.mapDtoFromEpic(epic);
+
+        assertEqualsToFile("/DtoMapper/EpicDto_empty.json", res);
     }
 
     private <T> T objectFromFile(String fileName, Class<T> objectClass) {

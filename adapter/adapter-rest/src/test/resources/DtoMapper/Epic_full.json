@@ -1,0 +1,29 @@
+{
+  "id": 342,
+  "uuid": "9b4c4090-8ff7-11eb-a8b3-0242ac130003",
+  "name": "Epic name",
+  "description": "Description of this epic",
+  "members": [
+    {
+      "login": "login",
+      "role": "viewer"
+    }
+  ],
+  "taskLists": [
+    {
+      "id": 1,
+      "name": "Task List",
+      "tasks": [
+        {
+          "id": 1,
+          "uuid": "9b4c4090-8ff7-11eb-a8b3-0242ac130123",
+          "name": "Task 1",
+          "description": "Description for task one",
+          "priority": 1,
+          "checked": false,
+          "assigned": 517
+        }
+      ]
+    }
+  ]
+}
