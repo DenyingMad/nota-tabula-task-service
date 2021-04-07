@@ -1,10 +1,8 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/nota_tabula_tasks
-    username: sa
+    url: jdbc:postgresql://nota-tabula.ctezjyhwnobs.eu-central-1.rds.amazonaws.com:5432/tasks
+    username: postgres
     password: password
   jpa:
     show-sql: true
-server:
-  port: 8080
