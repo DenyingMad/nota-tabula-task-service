@@ -2,6 +2,8 @@ package com.devilpanda.ntabula_task.fw;
 
 import com.devilpanda.ntabula_task.adapter.rest.CollectionResponseDto;
 import com.devilpanda.ntabula_task.adapter.rest.EpicDto;
+import com.devilpanda.ntabula_task.adapter.rest.TaskDto;
+import com.devilpanda.ntabula_task.adapter.rest.TaskListDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +36,26 @@ public class AbstractApiIntegrationTest {
         MockHttpServletResponse response = this.mvc.perform(post("/api/rest/epic"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
-        return getDtoFromResponse(response, new TypeReference<>(){
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
+    public TaskListDto performCreateTaskList(String epicId, String taskListName) throws Exception {
+        MockHttpServletResponse response = this.mvc.perform(post("/api/rest/epic/" + epicId + "/task-list")
+                .content(taskListName))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
+    public TaskDto performCreateTask(String epicId, Long taskListId, String taskName) throws Exception {
+        MockHttpServletResponse response = this.mvc.perform(
+                post("/api/rest/epic/" + epicId + "/task-list/" + taskListId + "/task")
+                        .content(taskName))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
         });
     }
 
@@ -42,7 +63,7 @@ public class AbstractApiIntegrationTest {
         MockHttpServletResponse response = this.mvc.perform(get("/api/rest/epic"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
-        return getDtoFromResponse(response, new TypeReference<>(){
+        return getDtoFromResponse(response, new TypeReference<>() {
         });
     }
 

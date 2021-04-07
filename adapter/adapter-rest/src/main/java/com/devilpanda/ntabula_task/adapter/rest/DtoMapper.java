@@ -46,6 +46,14 @@ public class DtoMapper {
         return mapper.map(source, EpicDto.class);
     }
 
+    public TaskListDto mapDtoFromTaskList(TaskList source) {
+        return mapper.map(source, TaskListDto.class);
+    }
+
+    public TaskDto mapDtoFromTask(Task source) {
+        return mapper.map(source, TaskDto.class);
+    }
+
     // =-----------------------------------------------------
     // Implementation
     // =-----------------------------------------------------
