@@ -89,7 +89,7 @@ public class DtoMapperTest {
     public static class MyDefaultPrettyPrinter extends DefaultPrettyPrinter {
 
         public MyDefaultPrettyPrinter() {
-            this._objectIndenter = new DefaultIndenter("  ", "\n");
+            this._objectIndenter = new DefaultIndenter("  ", "\r\n");
             this._arrayIndenter = _objectIndenter;
         }
 

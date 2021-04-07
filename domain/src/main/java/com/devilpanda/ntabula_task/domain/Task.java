@@ -22,7 +22,7 @@ public class Task extends BaseEntity {
     private Long assigned;
 
     @ManyToOne
-    @JoinColumn(name = "taskListId")
+    @JoinColumn(name = "tasklistid")
     private TaskList taskList;
 
 }
