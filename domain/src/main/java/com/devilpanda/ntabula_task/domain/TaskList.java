@@ -14,7 +14,7 @@ public class TaskList extends BaseEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "epicId")
+    @JoinColumn(name = "epicid")
     private Epic epic;
 
     @OneToMany(mappedBy = "taskList")

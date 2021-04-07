@@ -1,5 +1,6 @@
 package com.devilpanda.ntabula_task.fw;
 
+import com.devilpanda.ntabula_task.adapter.rest.CollectionResponseDto;
 import com.devilpanda.ntabula_task.adapter.rest.EpicDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +32,14 @@ public class AbstractApiIntegrationTest {
 
     public EpicDto performCreateEpic() throws Exception {
         MockHttpServletResponse response = this.mvc.perform(post("/api/rest/epic"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>(){
+        });
+    }
+
+    public CollectionResponseDto<EpicDto> performGetAllEpics() throws Exception {
+        MockHttpServletResponse response = this.mvc.perform(get("/api/rest/epic"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>(){

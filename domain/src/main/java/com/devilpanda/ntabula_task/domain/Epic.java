@@ -18,8 +18,8 @@ public class Epic extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = "MEMBER_EPIC",
-            joinColumns = @JoinColumn(name = "epicId"),
-            inverseJoinColumns = @JoinColumn(name = "memberId")
+            joinColumns = @JoinColumn(name = "epicid"),
+            inverseJoinColumns = @JoinColumn(name = "memberid")
     )
     private Set<Member> members;
 

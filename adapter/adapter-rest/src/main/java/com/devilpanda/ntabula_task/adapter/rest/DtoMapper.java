@@ -113,9 +113,14 @@ public class DtoMapper {
             TaskList source = context.getSource();
             TaskListDto destination = context.getDestination();
 
-            destination.setTasks(source.getTasks().stream()
-                    .map(task -> mapper.map(task, TaskDto.class))
-                    .collect(toList()));
+            Set<Task> tasks = source.getTasks();
+            if (tasks != null) {
+                destination.setTasks(tasks.stream()
+                        .map(task -> mapper.map(task, TaskDto.class))
+                        .collect(toList()));
+            } else {
+                destination.setTasks(new ArrayList<>());
+            }
 
             return destination;
         };

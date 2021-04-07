@@ -7,9 +7,10 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/rest/epic")
@@ -53,9 +54,11 @@ public class EpicController {
     })
     @GetMapping()
     public CollectionResponseDto<EpicDto> getAllEpics() {
-        List<EpicDto> list = new ArrayList<>();
-        //list.add(epic());
-        return new CollectionResponseDto<>(list);
+        List<Epic> epics = epicService.getAllEpics();
+        List<EpicDto> epicDtos = epics.stream()
+                .map(mapper::mapDtoFromEpic)
+                .collect(toList());
+        return new CollectionResponseDto<>(epicDtos);
     }
 
     @ApiResponses(value = {
