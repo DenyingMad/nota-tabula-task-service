@@ -1,8 +1,8 @@
 spring:
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/nota_tabula_tasks
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:tasks
     username: sa
-    password: password
+    password:
   jpa:
     show-sql: true
