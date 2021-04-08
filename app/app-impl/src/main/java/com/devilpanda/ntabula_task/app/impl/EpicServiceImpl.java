@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toSet;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +25,11 @@ public class EpicServiceImpl implements EpicService {
     public Epic createEpic() {
         Epic epic = new Epic();
         epic.setUuid(UUID.randomUUID());
-        return epicRepository.saveAndFlush(epic);
+
+        epic = epicRepository.saveAndFlush(epic);
+        epic.setTaskLists(Stream.of(createTaskList(epic.getUuid(), "Default TaskList")).collect(toSet()));
+
+        return epic;
     }
 
     @Override

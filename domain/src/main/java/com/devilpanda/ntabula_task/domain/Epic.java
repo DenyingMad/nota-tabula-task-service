@@ -23,6 +23,8 @@ public class Epic extends BaseEntity {
     )
     private Set<Member> members;
 
-    @OneToMany(mappedBy = "epic")
+    @OneToMany(mappedBy = "epic",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
     private Set<TaskList> taskLists;
 }
