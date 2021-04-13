@@ -24,23 +24,23 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.devilpanda</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>domain</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.devilpanda</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>adapter-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.devilpanda</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>adapter-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.devilpanda</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>app-impl</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.devilpanda</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>app-api</artifactId>
         </dependency>
 

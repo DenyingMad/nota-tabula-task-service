@@ -4,6 +4,12 @@ spring:
     url: jdbc:postgresql://nota-tabula.ctezjyhwnobs.eu-central-1.rds.amazonaws.com:5432/tasks
     username: postgres
     password: password
+    tomcat:
+      min-idle: 8
+      initial-size: 50
+      max-idle: 150
+      max-active: 300
+      max-wait: 20000
   jpa:
     show-sql: true
 

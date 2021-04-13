@@ -10,7 +10,7 @@
 	</parent>
 	<packaging>pom</packaging>
 
-	<artifactId>ntabula_task</artifactId>
+	<artifactId>task_service</artifactId>
 	<version>1.0</version>
 	<name>Nota Tabula - Task Service</name>
 

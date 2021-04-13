@@ -1,1 +1,2 @@
-# nota-tabula-task-service
+# Nota Tabula - Task Service
+Сервис, управляющий задачами
