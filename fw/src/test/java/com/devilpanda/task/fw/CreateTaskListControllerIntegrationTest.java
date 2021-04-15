@@ -8,16 +8,13 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 public class CreateTaskListControllerIntegrationTest extends AbstractApiIntegrationTest {
-
-    private static final String TASK_LIST_NAME = "New Task List";
-
     @Test
     public void createTaskList() throws Exception {
         EpicDto epicDto = performCreateEpicAndGetResult();
         UUID epicUuid = UUID.fromString(epicDto.getEpicId());
 
-        TaskListDto taskList = performCreateTaskListAndGetResult(epicUuid, TASK_LIST_NAME);
+        TaskListDto taskList = performCreateTaskListAndGetResult(epicUuid, TASK_LIST_NAME_1);
 
-        Assertions.assertEquals(TASK_LIST_NAME, taskList.getTaskListName());
+        Assertions.assertEquals(TASK_LIST_NAME_1, taskList.getTaskListName());
     }
 }

@@ -6,7 +6,6 @@ import com.devilpanda.task.adapter.rest.TaskDto;
 import com.devilpanda.task.adapter.rest.TaskListDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,15 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
 @ActiveProfiles("test")
 public class AbstractApiIntegrationTest {
+    protected static final String TASK_LIST_NAME_1 = "Task List #1";
+    protected static final String TASK_NAME_1 = "Task #1";
 
     @Autowired
     protected MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void setUp() {
-    }
 
     protected ResultActions performCreateEpic() throws Exception {
         return this.mvc.perform(post("/api/rest/epic"));
