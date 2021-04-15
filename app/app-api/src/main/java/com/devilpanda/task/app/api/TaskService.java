@@ -8,4 +8,5 @@ import java.util.UUID;
 @Service
 public interface TaskService {
     Task createTask(UUID epicUuid, Long taskListId, String taskName);
+    void deleteTask(UUID taskUuid);
 }

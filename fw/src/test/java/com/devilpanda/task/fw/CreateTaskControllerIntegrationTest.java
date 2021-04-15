@@ -21,7 +21,7 @@ public class CreateTaskControllerIntegrationTest extends AbstractApiIntegrationT
         UUID epicUuid = UUID.fromString(epic.getEpicId());
         TaskListDto taskListDto = performCreateTaskListAndGetResult(epicUuid, TASK_LIST_NAME);
 
-        TaskDto actualTask = performCreateTaskAndGetResponse(epic.getEpicId(), taskListDto.getTaskListId(), TASK_NAME);
+        TaskDto actualTask = performCreateTaskAndGetResponse(epicUuid, taskListDto.getTaskListId(), TASK_NAME);
 
         assertEquals(TASK_NAME, actualTask.getTaskName());
         assertNotNull(UUID.fromString(actualTask.getTaskId()));

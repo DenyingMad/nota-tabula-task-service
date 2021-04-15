@@ -7,6 +7,7 @@ import com.devilpanda.task.domain.Task;
 import com.devilpanda.task.domain.TaskList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.UUID;
@@ -29,5 +30,11 @@ public class TaskServiceImpl implements TaskService {
         task.setChecked(false);
 
         return taskRepository.saveAndFlush(task);
+    }
+
+    @Transactional
+    @Override
+    public void deleteTask(UUID taskUuid) {
+         taskRepository.deleteTaskByUuid(taskUuid);
     }
 }
