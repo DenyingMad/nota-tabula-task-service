@@ -81,7 +81,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
-        return this.mvc.perform(delete("/api/rest/epic/" + uuid + "/delete"));
+        return this.mvc.perform(delete("/api/rest/epic/" + uuid));
     }
 
     // =-----------------------------------------------------

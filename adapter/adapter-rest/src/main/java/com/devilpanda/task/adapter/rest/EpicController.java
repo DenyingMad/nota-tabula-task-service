@@ -86,7 +86,7 @@ public class EpicController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
-    @DeleteMapping("/{uuid}/delete")
+    @DeleteMapping("/{uuid}")
     public void deleteEpic(@PathVariable UUID uuid) {
         epicService.deleteEpicByUuid(uuid);
     }
