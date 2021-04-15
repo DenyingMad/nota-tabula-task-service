@@ -7,6 +7,7 @@ import com.devilpanda.task.domain.Epic;
 import com.devilpanda.task.domain.TaskList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -48,5 +49,11 @@ public class EpicServiceImpl implements EpicService {
     public List<Epic> getAllEpics() {
         // todo поиск эпиков в которых текущий пользователь является участником
         return epicRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public void deleteEpicByUuid(UUID epicUuid) {
+        epicRepository.deleteEpicByUuid(epicUuid);
     }
 }

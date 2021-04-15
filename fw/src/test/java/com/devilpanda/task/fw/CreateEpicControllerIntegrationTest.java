@@ -11,7 +11,7 @@ public class CreateEpicControllerIntegrationTest extends AbstractApiIntegrationT
 
     @Test
     public void createEpic() throws Exception {
-        EpicDto epic = performCreateEpic();
+        EpicDto epic = performCreateEpicAndGetResult();
 
         assertNotNull(UUID.fromString(epic.getEpicId()));
         assertNotNull(epic.getTaskLists().get(0));

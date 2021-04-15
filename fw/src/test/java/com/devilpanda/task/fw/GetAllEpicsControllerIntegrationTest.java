@@ -9,10 +9,10 @@ public class GetAllEpicsControllerIntegrationTest extends AbstractApiIntegration
 
     @Test
     public void getAllEpics() throws Exception {
-        EpicDto epic1 = performCreateEpic();
-        EpicDto epic2 = performCreateEpic();
+        EpicDto epic1 = performCreateEpicAndGetResult();
+        EpicDto epic2 = performCreateEpicAndGetResult();
 
-        CollectionResponseDto<EpicDto> responseDto = performGetAllEpics();
+        CollectionResponseDto<EpicDto> responseDto = performGetAllEpicsAndGetResult();
 
         Assertions.assertNotNull(responseDto.getData());
         Assertions.assertNotNull(responseDto.getData().get(0).getEpicId());

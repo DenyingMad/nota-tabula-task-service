@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface EpicRepository extends JpaRepository<Epic, Long> {
-
     Optional<Epic> findByUuid(UUID uuid);
+
+    void deleteEpicByUuid(UUID uuid);
 }

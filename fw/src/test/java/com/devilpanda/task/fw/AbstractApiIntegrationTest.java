@@ -13,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.UUID;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -32,39 +34,54 @@ public class AbstractApiIntegrationTest {
     public void setUp() {
     }
 
-    public EpicDto performCreateEpic() throws Exception {
-        MockHttpServletResponse response = this.mvc.perform(post("/api/rest/epic"))
+    protected ResultActions performCreateEpic() throws Exception {
+        return this.mvc.perform(post("/api/rest/epic"));
+    }
+
+    protected EpicDto performCreateEpicAndGetResult() throws Exception {
+        MockHttpServletResponse response = performCreateEpic().
+                andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
+    protected ResultActions performCreateTaskList(String epicId, String taskListName) throws Exception {
+        return this.mvc.perform(post("/api/rest/epic/" + epicId + "/task-list")
+                .content(taskListName));
+    }
+
+    protected TaskListDto performCreateTaskListAndGetResult(String epicId, String taskListName) throws Exception {
+        MockHttpServletResponse response = performCreateTaskList(epicId, taskListName)
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
     }
 
-    public TaskListDto performCreateTaskList(String epicId, String taskListName) throws Exception {
-        MockHttpServletResponse response = this.mvc.perform(post("/api/rest/epic/" + epicId + "/task-list")
-                .content(taskListName))
+    protected ResultActions performCreateTask(String epicId, Long taskListId, String taskName) throws Exception {
+        return this.mvc.perform(post("/api/rest/epic/" + epicId + "/task-list/" + taskListId + "/task")
+                .content(taskName));
+    }
+
+    protected TaskDto performCreateTaskAndGetResponse(String epicId, Long taskListId, String taskName) throws Exception {
+        MockHttpServletResponse response = performCreateTask(epicId, taskListId, taskName)
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
     }
 
-    public TaskDto performCreateTask(String epicId, Long taskListId, String taskName) throws Exception {
-        MockHttpServletResponse response = this.mvc.perform(
-                post("/api/rest/epic/" + epicId + "/task-list/" + taskListId + "/task")
-                        .content(taskName))
-                .andExpect(status().isOk())
-                .andReturn().getResponse();
-        return getDtoFromResponse(response, new TypeReference<>() {
-        });
-    }
-
-    public CollectionResponseDto<EpicDto> performGetAllEpics() throws Exception {
+    protected CollectionResponseDto<EpicDto> performGetAllEpicsAndGetResult() throws Exception {
         MockHttpServletResponse response = this.mvc.perform(get("/api/rest/epic"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
+    }
+
+    protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
+        return this.mvc.perform(delete("/api/rest/epic/" + uuid + "/delete"));
     }
 
     // =-----------------------------------------------------
@@ -75,5 +92,4 @@ public class AbstractApiIntegrationTest {
         String json = response.getContentAsString();
         return objectMapper.readValue(json, dtoClass);
     }
-
 }

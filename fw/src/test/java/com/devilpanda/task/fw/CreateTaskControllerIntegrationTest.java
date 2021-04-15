@@ -17,10 +17,10 @@ public class CreateTaskControllerIntegrationTest extends AbstractApiIntegrationT
 
     @Test
     public void createTask() throws Exception {
-        EpicDto epic = performCreateEpic();
-        TaskListDto taskListDto = performCreateTaskList(epic.getEpicId(), TASK_LIST_NAME);
+        EpicDto epic = performCreateEpicAndGetResult();
+        TaskListDto taskListDto = performCreateTaskListAndGetResult(epic.getEpicId(), TASK_LIST_NAME);
 
-        TaskDto actualTask = performCreateTask(epic.getEpicId(), taskListDto.getTaskListId(), TASK_NAME);
+        TaskDto actualTask = performCreateTaskAndGetResponse(epic.getEpicId(), taskListDto.getTaskListId(), TASK_NAME);
 
         assertEquals(TASK_NAME, actualTask.getTaskName());
         assertNotNull(UUID.fromString(actualTask.getTaskId()));
