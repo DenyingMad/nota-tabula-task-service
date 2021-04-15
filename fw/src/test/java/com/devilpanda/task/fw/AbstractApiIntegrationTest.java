@@ -46,12 +46,12 @@ public class AbstractApiIntegrationTest {
         });
     }
 
-    protected ResultActions performCreateTaskList(String epicId, String taskListName) throws Exception {
+    protected ResultActions performCreateTaskList(UUID epicId, String taskListName) throws Exception {
         return this.mvc.perform(post("/api/rest/epic/" + epicId + "/task-list")
                 .content(taskListName));
     }
 
-    protected TaskListDto performCreateTaskListAndGetResult(String epicId, String taskListName) throws Exception {
+    protected TaskListDto performCreateTaskListAndGetResult(UUID epicId, String taskListName) throws Exception {
         MockHttpServletResponse response = performCreateTaskList(epicId, taskListName)
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
@@ -82,6 +82,10 @@ public class AbstractApiIntegrationTest {
 
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
         return this.mvc.perform(delete("/api/rest/epic/" + uuid));
+    }
+
+    protected ResultActions performDeleteTaskList(UUID epicId, Long taskListId) throws Exception {
+        return this.mvc.perform(delete("/api/rest/epic/" + epicId + "/task-list/" + taskListId));
     }
 
     // =-----------------------------------------------------

@@ -13,4 +13,5 @@ public interface EpicService {
     TaskList createTaskList(UUID epicUuid, String taskListName);
     List<Epic> getAllEpics();
     void deleteEpicByUuid(UUID epicUuid);
+    void deleteTaskList(UUID epicUuid, Long taskListId);
 }

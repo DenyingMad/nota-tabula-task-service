@@ -90,4 +90,12 @@ public class EpicController {
     public void deleteEpic(@PathVariable UUID uuid) {
         epicService.deleteEpicByUuid(uuid);
     }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")
+    })
+    @DeleteMapping("/{epicId}/task-list/{taskListId}")
+    public void deleteTaskList(@PathVariable UUID epicId, @PathVariable Long taskListId) {
+        epicService.deleteTaskList(epicId, taskListId);
+    }
 }

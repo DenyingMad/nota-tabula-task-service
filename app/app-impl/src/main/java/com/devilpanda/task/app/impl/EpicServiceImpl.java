@@ -56,4 +56,10 @@ public class EpicServiceImpl implements EpicService {
     public void deleteEpicByUuid(UUID epicUuid) {
         epicRepository.deleteEpicByUuid(epicUuid);
     }
+
+    @Transactional
+    @Override
+    public void deleteTaskList(UUID epicUuid, Long taskListId) {
+        taskListRepository.deleteTaskListByEpic_UuidAndId(epicUuid, taskListId);
+    }
 }
