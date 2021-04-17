@@ -23,7 +23,7 @@ CREATE TABLE TASK
     uuid        UUID      NOT NULL,
     name        VARCHAR   NOT NULL,
     description VARCHAR,
-    priority    INT,
+    priority    VARCHAR,
     checked     BOOLEAN   NOT NULL DEFAULT FALSE,
     assigned    BIGINT,
     PRIMARY KEY (id),

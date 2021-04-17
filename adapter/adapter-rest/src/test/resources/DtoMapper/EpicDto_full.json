@@ -20,7 +20,7 @@
         {
           "assigned": 517,
           "checked": false,
-          "priority": 1,
+          "priority": "MEDIUM",
           "taskDescription": "Description for task one",
           "taskId": "9b4c4090-8ff7-11eb-a8b3-0242ac130123",
           "taskName": "Task 1"

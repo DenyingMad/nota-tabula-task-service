@@ -23,27 +23,27 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>${groupId}</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>${groupId}</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>app-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>${groupId}</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>app-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>${groupId}</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>adapter-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>${groupId}</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>adapter-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -5,10 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Getter
@@ -19,9 +16,11 @@ public class Task extends BaseEntity {
     private UUID uuid;
     private String name;
     private String description;
-    private Integer priority;
     private Boolean checked;
     private Long assigned;
+
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
 
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne

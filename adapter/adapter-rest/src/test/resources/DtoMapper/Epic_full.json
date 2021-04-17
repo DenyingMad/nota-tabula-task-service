@@ -19,7 +19,7 @@
           "uuid": "9b4c4090-8ff7-11eb-a8b3-0242ac130123",
           "name": "Task 1",
           "description": "Description for task one",
-          "priority": 1,
+          "priority": "MEDIUM",
           "checked": false,
           "assigned": 517
         }
