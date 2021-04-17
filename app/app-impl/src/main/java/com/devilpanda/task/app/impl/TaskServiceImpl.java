@@ -65,6 +65,16 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.saveAndFlush(task);
     }
 
+    @Override
+    public Task renameTask(UUID taskUuid, String name) {
+        Task task = taskRepository.findByUuid(taskUuid)
+                .orElseThrow(() -> new ElementNotFoundException(taskUuid));
+
+        task.setName(name);
+
+        return taskRepository.saveAndFlush(task);
+    }
+
     @Transactional
     @Override
     public void deleteTask(UUID taskUuid) {

@@ -131,6 +131,18 @@ public class AbstractApiIntegrationTest {
         });
     }
 
+    protected ResultActions performRenameTask(UUID taskUuid, String name) throws Exception {
+        return this.mvc.perform(put("/api/rest/task/" + taskUuid + "/rename/" + name));
+    }
+
+    protected TaskDto performRenameTaskAndGetResponse(UUID taskUuid, String name) throws Exception {
+        MockHttpServletResponse response = performRenameTask(taskUuid, name)
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
     // =-----------------------------------------------------
     // Implementation
     // =-----------------------------------------------------

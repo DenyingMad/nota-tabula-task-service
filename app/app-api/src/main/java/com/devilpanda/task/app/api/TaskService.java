@@ -14,4 +14,6 @@ public interface TaskService {
     Task updateTaskPriority(UUID taskUuid, TaskPriority priority);
 
     Task updateTaskStatus(UUID taskUuid, TaskStatus status);
+
+    Task renameTask(UUID taskUuid, String name);
 }

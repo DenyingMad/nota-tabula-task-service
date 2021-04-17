@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UpdateTaskControllerIntegrationTest extends AbstractApiIntegrationTest {
+    private static final String UPDATED_NAME = "New Task Name";
+
     @Test
     public void updateTask_setPriority_success() throws Exception {
         UUID taskUuid = UUID.fromString(task.getTaskId());
@@ -65,6 +67,24 @@ public class UpdateTaskControllerIntegrationTest extends AbstractApiIntegrationT
         UUID taskUuid = UUID.randomUUID();
 
         ResultActions resultActions = performUpdateTaskStatus(taskUuid, IN_PROGRESS);
+
+        resultActions.andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateTask_rename() throws Exception {
+        UUID taskUuid = UUID.fromString(task.getTaskId());
+
+        TaskDto task = performRenameTaskAndGetResponse(taskUuid, UPDATED_NAME);
+
+        assertEquals(UPDATED_NAME, task.getTaskName());
+    }
+
+    @Test
+    public void updateTask_rename_taskNotFound() throws Exception {
+        UUID taskUuid = UUID.randomUUID();
+
+        ResultActions resultActions = performRenameTask(taskUuid, UPDATED_NAME);
 
         resultActions.andExpect(status().isNotFound());
     }
