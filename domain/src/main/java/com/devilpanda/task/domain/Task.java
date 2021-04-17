@@ -16,11 +16,13 @@ public class Task extends BaseEntity {
     private UUID uuid;
     private String name;
     private String description;
-    private Boolean checked;
     private Long assigned;
 
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne

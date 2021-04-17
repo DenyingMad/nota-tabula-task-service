@@ -5,6 +5,7 @@ import com.devilpanda.task.adapter.rest.EpicDto;
 import com.devilpanda.task.adapter.rest.TaskDto;
 import com.devilpanda.task.adapter.rest.TaskListDto;
 import com.devilpanda.task.domain.TaskPriority;
+import com.devilpanda.task.domain.TaskStatus;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -112,6 +113,18 @@ public class AbstractApiIntegrationTest {
 
     protected TaskDto performUpdateTaskPriorityAndGetResult(UUID taskUuid, TaskPriority priority) throws Exception {
         MockHttpServletResponse response = performUpdateTaskPriority(taskUuid, priority)
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
+    protected ResultActions performUpdateTaskStatus(UUID taskUuid, TaskStatus taskStatus) throws Exception {
+        return this.mvc.perform(put("/api/rest/task/" + taskUuid + "/status/" + taskStatus));
+    }
+
+    protected TaskDto performUpdateTaskStatusAndGetResponse(UUID taskUuid, TaskStatus taskStatus) throws Exception {
+        MockHttpServletResponse response = performUpdateTaskStatus(taskUuid, taskStatus)
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {

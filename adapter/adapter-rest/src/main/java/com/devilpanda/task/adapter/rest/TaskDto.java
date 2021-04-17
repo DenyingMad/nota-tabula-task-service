@@ -1,6 +1,7 @@
 package com.devilpanda.task.adapter.rest;
 
 import com.devilpanda.task.domain.TaskPriority;
+import com.devilpanda.task.domain.TaskStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class TaskDto {
     // todo поменять на MemberDto
     private Long assigned;
     private TaskPriority priority;
-    private Boolean checked;
+    private TaskStatus status;
 }

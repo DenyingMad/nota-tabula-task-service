@@ -24,7 +24,7 @@ CREATE TABLE TASK
     name        VARCHAR   NOT NULL,
     description VARCHAR,
     priority    VARCHAR,
-    checked     BOOLEAN   NOT NULL DEFAULT FALSE,
+    status      VARCHAR   NOT NULL,
     assigned    BIGINT,
     PRIMARY KEY (id),
     FOREIGN KEY (taskListId) REFERENCES TASKLIST (id)

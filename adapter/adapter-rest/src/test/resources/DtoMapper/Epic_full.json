@@ -20,7 +20,7 @@
           "name": "Task 1",
           "description": "Description for task one",
           "priority": "MEDIUM",
-          "checked": false,
+          "status": "DONE",
           "assigned": 517
         }
       ]

@@ -37,7 +37,7 @@ public class DtoMapper {
                 .addMapping(Task::getUuid, TaskDto::setTaskId)
                 .addMapping(Task::getName, TaskDto::setTaskName)
                 .addMapping(Task::getDescription, TaskDto::setTaskDescription)
-                .addMapping(Task::getChecked, TaskDto::setChecked)
+                .addMapping(Task::getStatus, TaskDto::setStatus)
                 .addMapping(Task::getPriority, TaskDto::setPriority)
                 .setPostConverter(taskDtoPostConverter());
     }
