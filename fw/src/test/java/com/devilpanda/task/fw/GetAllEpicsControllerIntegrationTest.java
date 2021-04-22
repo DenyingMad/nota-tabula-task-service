@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class GetAllEpicsControllerIntegrationTest extends AbstractApiIntegrationTest {
-
     @Test
     public void getAllEpics() throws Exception {
         EpicDto epic1 = performCreateEpicAndGetResult();

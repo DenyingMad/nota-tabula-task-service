@@ -26,9 +26,7 @@ public class DtoMapper {
         mapper.typeMap(Epic.class, EpicDto.class)
                 .addMapping(Epic::getUuid, EpicDto::setEpicId)
                 .setPostConverter(epicDtoPostConverter());
-        mapper.typeMap(Member.class, MemberDto.class)
-                .addMapping(Member::getLogin, MemberDto::setLogin)
-                .addMapping(Member::getRole, MemberDto::setRole);
+        mapper.typeMap(Member.class, MemberDto.class);
         mapper.typeMap(TaskList.class, TaskListDto.class)
                 .addMapping(TaskList::getId, TaskListDto::setTaskListId)
                 .addMapping(TaskList::getName, TaskListDto::setTaskListName)
@@ -37,8 +35,6 @@ public class DtoMapper {
                 .addMapping(Task::getUuid, TaskDto::setTaskId)
                 .addMapping(Task::getName, TaskDto::setTaskName)
                 .addMapping(Task::getDescription, TaskDto::setTaskDescription)
-                .addMapping(Task::getStatus, TaskDto::setStatus)
-                .addMapping(Task::getPriority, TaskDto::setPriority)
                 .setPostConverter(taskDtoPostConverter());
     }
 

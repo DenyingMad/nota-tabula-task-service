@@ -16,4 +16,6 @@ public interface TaskService {
     Task updateTaskStatus(UUID taskUuid, TaskStatus status);
 
     Task renameTask(UUID taskUuid, String name);
+
+    Task getTask(UUID taskUuid);
 }

@@ -75,6 +75,12 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.saveAndFlush(task);
     }
 
+    @Override
+    public Task getTask(UUID taskUuid) {
+        return taskRepository.findByUuid(taskUuid)
+                .orElseThrow(() -> new ElementNotFoundException(taskUuid));
+    }
+
     @Transactional
     @Override
     public void deleteTask(UUID taskUuid) {

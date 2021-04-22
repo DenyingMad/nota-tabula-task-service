@@ -76,14 +76,6 @@ public class EpicController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = TaskDto.class)
-    })
-    @GetMapping("/{uuid}/task/{id}")
-    public TaskDto getTask(@PathVariable UUID uuid, @PathVariable Long id) {
-        return null;//epic().getTaskLists().get(0).getTasks().get(0);
-    }
-
-    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
     @DeleteMapping("/{uuid}")
