@@ -94,6 +94,18 @@ public class AbstractApiIntegrationTest {
         });
     }
 
+    protected ResultActions performGetTask(UUID taskUuid) throws Exception {
+        return this.mvc.perform(get("/api/rest/task/"+taskUuid));
+    }
+
+    protected TaskDto performGetTaskAndGetResult(UUID taskUuid) throws Exception {
+        MockHttpServletResponse response = performGetTask(taskUuid)
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
         return this.mvc.perform(delete("/api/rest/epic/" + uuid));
     }

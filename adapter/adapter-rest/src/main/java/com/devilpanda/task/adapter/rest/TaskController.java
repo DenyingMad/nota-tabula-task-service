@@ -7,10 +7,7 @@ import com.devilpanda.task.domain.TaskStatus;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -49,6 +46,16 @@ public class TaskController {
     @PutMapping("/rename/{name}")
     public TaskDto updateName(@PathVariable UUID taskUuid, @PathVariable String name) {
         Task task = taskService.renameTask(taskUuid, name);
+        return mapper.mapDtoFromTask(task);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = TaskDto.class),
+            @ApiResponse(code = 404, message = "Task not found", response = String.class)
+    })
+    @GetMapping()
+    public TaskDto getTask(@PathVariable UUID taskUuid) {
+        Task task = taskService.getTask(taskUuid);
         return mapper.mapDtoFromTask(task);
     }
 }
