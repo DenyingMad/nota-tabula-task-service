@@ -98,4 +98,14 @@ public class EpicController {
     public void deleteTask(@PathVariable UUID epicId, @PathVariable Long taskListId, @PathVariable UUID taskId) {
         taskService.deleteTask(taskId);
     }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = EpicDto.class),
+            @ApiResponse(code = 404, message = "Epic not found", response = String.class)
+    })
+    @PutMapping("/{uuid}/rename/{name}")
+    public EpicDto updateName(@PathVariable UUID uuid, @PathVariable String name) {
+        Epic epic = epicService.renameEpic(uuid, name);
+        return mapper.mapDtoFromEpic(epic);
+    }
 }
