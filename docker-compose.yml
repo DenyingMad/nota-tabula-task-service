@@ -6,9 +6,8 @@ services:
     image: 'nota-tabula/task-service:latest'
     build:
       context: .
-      dockerfile: Dockerfile
     ports:
-    - 8080:8080
+    - 8081:8081
     networks:
       - spring-cloud-network
   security-service:

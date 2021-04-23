@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Task-Service
+    name: task-service
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://nota-tabula.ctezjyhwnobs.eu-central-1.rds.amazonaws.com:5432/tasks
@@ -16,7 +16,7 @@ spring:
     show-sql: true
 
 server:
-  port: 8080
+  port: 8081
 
 eureka:
   instance:
