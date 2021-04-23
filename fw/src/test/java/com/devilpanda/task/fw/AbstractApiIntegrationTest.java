@@ -95,7 +95,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performGetTask(UUID taskUuid) throws Exception {
-        return this.mvc.perform(get("/api/rest/task/"+taskUuid));
+        return this.mvc.perform(get("/api/rest/task/" + taskUuid));
     }
 
     protected TaskDto performGetTaskAndGetResult(UUID taskUuid) throws Exception {
@@ -156,7 +156,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performRenameEpic(UUID epicUuid, String name) throws Exception {
-        return this.mvc.perform(put("/api/rest/epic/"+epicUuid+"/rename/"+name));
+        return this.mvc.perform(put("/api/rest/epic/" + epicUuid + "/rename/" + name));
     }
 
     protected EpicDto performRenameEpicAndGetResponse(UUID epicUuid, String name) throws Exception {
