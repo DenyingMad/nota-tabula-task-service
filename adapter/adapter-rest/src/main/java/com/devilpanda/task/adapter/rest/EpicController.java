@@ -76,6 +76,16 @@ public class EpicController {
     }
 
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = EpicDto.class),
+            @ApiResponse(code = 404, message = "Epic not found", response = String.class)
+    })
+    @PutMapping("/{epicId}/rename/{name}")
+    public EpicDto updateName(@PathVariable UUID epicId, @PathVariable String name) {
+        Epic epic = epicService.renameEpic(epicId, name);
+        return mapper.mapDtoFromEpic(epic);
+    }
+
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
     @DeleteMapping("/{uuid}")
