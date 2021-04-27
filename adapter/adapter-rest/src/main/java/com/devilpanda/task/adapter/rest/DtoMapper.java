@@ -114,9 +114,11 @@ public class DtoMapper {
             Task source = context.getSource();
             TaskDto destination = context.getDestination();
 
-            MemberDto assigned = mapper.map(source.getAssigned(), MemberDto.class);
-            destination.setAssigned(assigned);
-
+            Member assigned = source.getAssigned();
+            if (assigned != null) {
+                MemberDto assignedDto = mapper.map(assigned, MemberDto.class);
+                destination.setAssigned(assignedDto);
+            }
             return destination;
         };
     }
