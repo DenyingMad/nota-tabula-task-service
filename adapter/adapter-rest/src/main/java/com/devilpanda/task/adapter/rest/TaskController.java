@@ -1,5 +1,6 @@
 package com.devilpanda.task.adapter.rest;
 
+import com.devilpanda.task.adapter.rest.dto.TaskDto;
 import com.devilpanda.task.app.api.TaskService;
 import com.devilpanda.task.domain.Task;
 import com.devilpanda.task.domain.TaskPriority;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/rest/task/{taskUuid}")
+@RequestMapping("/api/rest/project/task/{taskUuid}")
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;

@@ -2,6 +2,8 @@ package com.devilpanda.task.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,12 +18,17 @@ public class Epic extends BaseEntity {
     private String name;
     private String description;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn(name = "projectid")
+    private Project project;
+
     @ManyToMany
-    @JoinTable(name = "MEMBER_EPIC",
+    @JoinTable(name = "TEAM_EPIC",
             joinColumns = @JoinColumn(name = "epicid"),
-            inverseJoinColumns = @JoinColumn(name = "memberid")
+            inverseJoinColumns = @JoinColumn(name = "teamid")
     )
-    private Set<Member> members;
+    private Set<Team> teams;
 
     @OneToMany(mappedBy = "epic",
             orphanRemoval = true,

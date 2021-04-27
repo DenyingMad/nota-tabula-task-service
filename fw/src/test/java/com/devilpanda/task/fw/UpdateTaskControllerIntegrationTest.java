@@ -1,6 +1,6 @@
 package com.devilpanda.task.fw;
 
-import com.devilpanda.task.adapter.rest.TaskDto;
+import com.devilpanda.task.adapter.rest.dto.TaskDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.ResultActions;
 

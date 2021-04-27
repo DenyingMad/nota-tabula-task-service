@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EpicService {
-    Epic createEpic();
+    Epic createEpic(UUID projectUuid);
 
     TaskList createTaskList(UUID epicUuid, String taskListName);
 

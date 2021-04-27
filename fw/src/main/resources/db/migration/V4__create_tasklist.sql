@@ -1,0 +1,8 @@
+CREATE TABLE TASKLIST
+(
+    id     BIGSERIAL NOT NULL,
+    epicId BIGINT    NOT NULL,
+    name   VARCHAR,
+    PRIMARY KEY (id),
+    FOREIGN KEY (epicId) REFERENCES EPIC (id)
+);
