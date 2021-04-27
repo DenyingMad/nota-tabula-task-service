@@ -1,4 +1,4 @@
-package com.devilpanda.task.adapter.rest;
+package com.devilpanda.task.adapter.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;

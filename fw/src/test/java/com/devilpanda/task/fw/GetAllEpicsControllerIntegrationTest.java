@@ -1,7 +1,7 @@
 package com.devilpanda.task.fw;
 
-import com.devilpanda.task.adapter.rest.CollectionResponseDto;
-import com.devilpanda.task.adapter.rest.EpicDto;
+import com.devilpanda.task.adapter.rest.dto.CollectionResponseDto;
+import com.devilpanda.task.adapter.rest.dto.EpicDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

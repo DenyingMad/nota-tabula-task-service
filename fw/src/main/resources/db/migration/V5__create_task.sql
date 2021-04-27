@@ -9,5 +9,6 @@ CREATE TABLE TASK
     status      VARCHAR   NOT NULL,
     assigned    BIGINT,
     PRIMARY KEY (id),
-    FOREIGN KEY (taskListId) REFERENCES TASKLIST (id)
+    FOREIGN KEY (taskListId) REFERENCES TASKLIST (id),
+    FOREIGN KEY (assigned) REFERENCES MEMBER (id)
 );

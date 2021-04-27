@@ -1,5 +1,7 @@
 package com.devilpanda.task.adapter.rest;
 
+import com.devilpanda.task.adapter.rest.dto.EpicDto;
+import com.devilpanda.task.adapter.rest.dto.ProjectDto;
 import com.devilpanda.task.app.api.EpicService;
 import com.devilpanda.task.app.api.ProjectService;
 import com.devilpanda.task.domain.Epic;

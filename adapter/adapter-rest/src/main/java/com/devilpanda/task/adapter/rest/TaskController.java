@@ -1,5 +1,6 @@
 package com.devilpanda.task.adapter.rest;
 
+import com.devilpanda.task.adapter.rest.dto.TaskDto;
 import com.devilpanda.task.app.api.TaskService;
 import com.devilpanda.task.domain.Task;
 import com.devilpanda.task.domain.TaskPriority;

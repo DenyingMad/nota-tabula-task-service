@@ -16,7 +16,6 @@ public class Task extends BaseEntity {
     private UUID uuid;
     private String name;
     private String description;
-    private Long assigned;
 
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
@@ -28,4 +27,8 @@ public class Task extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "tasklistid")
     private TaskList taskList;
+
+    @ManyToOne
+    @JoinColumn(name = "assigned")
+    private Member assigned;
 }

@@ -1,12 +1,16 @@
 package com.devilpanda.task.adapter.rest;
 
+import com.devilpanda.task.adapter.rest.dto.*;
 import com.devilpanda.task.domain.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -110,8 +114,8 @@ public class DtoMapper {
             Task source = context.getSource();
             TaskDto destination = context.getDestination();
 
-            // todo здесь будет загрузка объекта Member assigned, пока отправляется только id исполнителя
-            destination.setAssigned(source.getAssigned());
+            MemberDto assigned = mapper.map(source.getAssigned(), MemberDto.class);
+            destination.setAssigned(assigned);
 
             return destination;
         };

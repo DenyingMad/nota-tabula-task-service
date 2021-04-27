@@ -18,7 +18,9 @@
       "taskListName": "Task List",
       "tasks": [
         {
-          "assigned": 517,
+          "assigned": {
+            "login": "login"
+          },
           "priority": "MEDIUM",
           "status": "DONE",
           "taskDescription": "Description for task one",

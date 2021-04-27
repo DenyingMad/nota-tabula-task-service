@@ -1,6 +1,6 @@
 package com.devilpanda.task.fw;
 
-import com.devilpanda.task.adapter.rest.TaskListDto;
+import com.devilpanda.task.adapter.rest.dto.TaskListDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

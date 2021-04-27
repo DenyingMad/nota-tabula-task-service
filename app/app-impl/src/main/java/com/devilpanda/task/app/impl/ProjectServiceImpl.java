@@ -17,6 +17,7 @@ public class ProjectServiceImpl implements ProjectService {
     public Project createProject() {
         Project project = new Project();
         project.setUuid(UUID.randomUUID());
+        project.setName("New project");
 
         return projectRepository.saveAndFlush(project);
     }

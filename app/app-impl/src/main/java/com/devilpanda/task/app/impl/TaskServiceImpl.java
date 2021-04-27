@@ -65,6 +65,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.saveAndFlush(task);
     }
 
+    @Transactional
     @Override
     public Task renameTask(UUID taskUuid, String name) {
         Task task = taskRepository.findByUuid(taskUuid)
@@ -72,7 +73,7 @@ public class TaskServiceImpl implements TaskService {
 
         task.setName(name);
 
-        return taskRepository.saveAndFlush(task);
+        return task;
     }
 
     @Override

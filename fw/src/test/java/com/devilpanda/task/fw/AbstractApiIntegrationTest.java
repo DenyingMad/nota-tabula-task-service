@@ -1,6 +1,6 @@
 package com.devilpanda.task.fw;
 
-import com.devilpanda.task.adapter.rest.*;
+import com.devilpanda.task.adapter.rest.dto.*;
 import com.devilpanda.task.domain.TaskPriority;
 import com.devilpanda.task.domain.TaskStatus;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
 @ActiveProfiles("test")
 public class AbstractApiIntegrationTest {
-    private static final String URL = "/api/rest/project";
+    private static final String BASE_URL = "/api/rest/project";
     protected static final String TASK_LIST_NAME = "Task List #1";
     protected static final String TASK_NAME = "Task #1";
 
@@ -49,7 +49,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performCreateProject() throws Exception {
-        return this.mvc.perform(post(URL));
+        return this.mvc.perform(post(BASE_URL));
     }
 
     protected ProjectDto performCreateProjectAndGetResult() throws Exception {
@@ -61,7 +61,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performCreateEpic(UUID projectUuid) throws Exception {
-        return this.mvc.perform(post(URL + "/" + projectUuid + "/epic"));
+        return this.mvc.perform(post(BASE_URL + "/" + projectUuid + "/epic"));
     }
 
     protected EpicDto performCreateEpicAndGetResult(UUID projectUuid) throws Exception {
@@ -73,7 +73,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performCreateTaskList(UUID epicId, String taskListName) throws Exception {
-        return this.mvc.perform(post(URL + "/epic/" + epicId + "/task-list")
+        return this.mvc.perform(post(BASE_URL + "/epic/" + epicId + "/task-list")
                 .content(taskListName));
     }
 
@@ -86,7 +86,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performCreateTask(UUID epicId, Long taskListId, String taskName) throws Exception {
-        return this.mvc.perform(post(URL + "/epic/" + epicId + "/task-list/" + taskListId + "/task")
+        return this.mvc.perform(post(BASE_URL + "/epic/" + epicId + "/task-list/" + taskListId + "/task")
                 .content(taskName));
     }
 
@@ -99,7 +99,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected CollectionResponseDto<EpicDto> performGetAllEpicsAndGetResult() throws Exception {
-        MockHttpServletResponse response = this.mvc.perform(get(URL + "/epic"))
+        MockHttpServletResponse response = this.mvc.perform(get(BASE_URL + "/epic"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
@@ -107,7 +107,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performGetTask(UUID taskUuid) throws Exception {
-        return this.mvc.perform(get(URL + "/task/" + taskUuid));
+        return this.mvc.perform(get(BASE_URL + "/task/" + taskUuid));
     }
 
     protected TaskDto performGetTaskAndGetResult(UUID taskUuid) throws Exception {
@@ -119,20 +119,20 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
-        return this.mvc.perform(delete(URL + "/epic/" + uuid));
+        return this.mvc.perform(delete(BASE_URL + "/epic/" + uuid));
     }
 
     protected ResultActions performDeleteTaskList(UUID epicId, Long taskListId) throws Exception {
-        return this.mvc.perform(delete(URL + "/epic/" + epicId + "/task-list/" + taskListId));
+        return this.mvc.perform(delete(BASE_URL + "/epic/" + epicId + "/task-list/" + taskListId));
     }
 
     protected ResultActions performDeleteTask(UUID epicId, Long taskListId, UUID taskId) throws Exception {
         return this.mvc.perform(
-                delete(URL + "/epic/" + epicId + "/task-list/" + taskListId + "/task/" + taskId));
+                delete(BASE_URL + "/epic/" + epicId + "/task-list/" + taskListId + "/task/" + taskId));
     }
 
     protected ResultActions performUpdateTaskPriority(UUID taskUuid, TaskPriority priority) throws Exception {
-        return this.mvc.perform(put(URL + "/task/" + taskUuid + "/priority/" + priority));
+        return this.mvc.perform(put(BASE_URL + "/task/" + taskUuid + "/priority/" + priority));
     }
 
     protected TaskDto performUpdateTaskPriorityAndGetResult(UUID taskUuid, TaskPriority priority) throws Exception {
@@ -144,7 +144,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performUpdateTaskStatus(UUID taskUuid, TaskStatus taskStatus) throws Exception {
-        return this.mvc.perform(put(URL + "/task/" + taskUuid + "/status/" + taskStatus));
+        return this.mvc.perform(put(BASE_URL + "/task/" + taskUuid + "/status/" + taskStatus));
     }
 
     protected TaskDto performUpdateTaskStatusAndGetResponse(UUID taskUuid, TaskStatus taskStatus) throws Exception {
@@ -156,7 +156,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performRenameTask(UUID taskUuid, String name) throws Exception {
-        return this.mvc.perform(put(URL + "/task/" + taskUuid + "/rename/" + name));
+        return this.mvc.perform(put(BASE_URL + "/task/" + taskUuid + "/rename/" + name));
     }
 
     protected TaskDto performRenameTaskAndGetResponse(UUID taskUuid, String name) throws Exception {
@@ -168,7 +168,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performRenameEpic(UUID epicUuid, String name) throws Exception {
-        return this.mvc.perform(put(URL + "/epic/" + epicUuid + "/rename/" + name));
+        return this.mvc.perform(put(BASE_URL + "/epic/" + epicUuid + "/rename/" + name));
     }
 
     protected EpicDto performRenameEpicAndGetResponse(UUID epicUuid, String name) throws Exception {

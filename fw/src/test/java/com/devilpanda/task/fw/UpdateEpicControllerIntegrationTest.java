@@ -1,13 +1,13 @@
 package com.devilpanda.task.fw;
 
-import com.devilpanda.task.adapter.rest.EpicDto;
+import com.devilpanda.task.adapter.rest.dto.EpicDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UpdateEpicControllerIntegrationTest extends AbstractApiIntegrationTest {
     private static final String UPDATED_NAME = "New Epic Name";

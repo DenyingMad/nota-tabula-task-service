@@ -1,5 +1,7 @@
 package com.devilpanda.task.adapter.rest;
 
+import com.devilpanda.task.adapter.rest.dto.EpicDto;
+import com.devilpanda.task.adapter.rest.dto.ProjectDto;
 import com.devilpanda.task.domain.Epic;
 import com.devilpanda.task.domain.Project;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -24,7 +26,6 @@ import java.text.SimpleDateFormat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DtoMapperTest {
-
     private DtoMapper mapper;
     private ObjectMapper objectMapper;
 

@@ -37,7 +37,10 @@
               "description": "Description for task one",
               "priority": "MEDIUM",
               "status": "DONE",
-              "assigned": 517
+              "assigned": {
+                "id": 1,
+                "login": "login"
+              }
             }
           ]
         }

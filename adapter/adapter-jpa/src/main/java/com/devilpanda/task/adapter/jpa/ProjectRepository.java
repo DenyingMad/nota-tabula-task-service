@@ -8,6 +8,4 @@ import java.util.UUID;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findByUuid(UUID uuid);
-
-    void deleteProjectByUuid(UUID uuid);
 }
