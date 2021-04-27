@@ -5,7 +5,7 @@
     "members": [
       {
         "login": "login",
-        "role": "viewer"
+        "role": "EDIT"
       }
     ],
     "totalTaskList": 1,

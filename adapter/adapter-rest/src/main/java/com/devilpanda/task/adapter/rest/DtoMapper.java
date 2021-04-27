@@ -1,17 +1,12 @@
 package com.devilpanda.task.adapter.rest;
 
-import com.devilpanda.task.domain.Epic;
-import com.devilpanda.task.domain.Member;
-import com.devilpanda.task.domain.Task;
-import com.devilpanda.task.domain.TaskList;
+import com.devilpanda.task.domain.*;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -23,19 +18,26 @@ public class DtoMapper {
         mapper = new ModelMapper();
         mapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.typeMap(Project.class, ProjectDto.class)
+                .addMapping(Project::getUuid, ProjectDto::setProjectId)
+                .addMapping(Project::getName, ProjectDto::setProjectName)
+                .addMapping(Project::getDescription, ProjectDto::setProjectDescription);
         mapper.typeMap(Epic.class, EpicDto.class)
                 .addMapping(Epic::getUuid, EpicDto::setEpicId)
                 .setPostConverter(epicDtoPostConverter());
         mapper.typeMap(Member.class, MemberDto.class);
         mapper.typeMap(TaskList.class, TaskListDto.class)
                 .addMapping(TaskList::getId, TaskListDto::setTaskListId)
-                .addMapping(TaskList::getName, TaskListDto::setTaskListName)
-                .setPostConverter(taskListDtoPostConverter());
+                .addMapping(TaskList::getName, TaskListDto::setTaskListName);
         mapper.typeMap(Task.class, TaskDto.class)
                 .addMapping(Task::getUuid, TaskDto::setTaskId)
                 .addMapping(Task::getName, TaskDto::setTaskName)
                 .addMapping(Task::getDescription, TaskDto::setTaskDescription)
                 .setPostConverter(taskDtoPostConverter());
+    }
+
+    public ProjectDto mapDtoFromProject(Project source) {
+        return mapper.map(source, ProjectDto.class);
     }
 
     public EpicDto mapDtoFromEpic(Epic source) {
@@ -63,12 +65,17 @@ public class DtoMapper {
             detailsDto.setEpicName(source.getName());
             detailsDto.setEpicDescription(source.getDescription());
 
-            Set<Member> members = source.getMembers();
-            if (members != null) {
-                detailsDto.setMembers(members.stream()
-                        .map(member -> mapper.map(member, MemberDto.class))
-                        .collect(toList()));
+            Set<MemberDto> memberDtos = new HashSet<>();
+            if(source.getTeams() != null) {
+                source.getTeams().forEach(team -> team.getMembers()
+                        .forEach(teamMember -> {
+                            String login = teamMember.getMember().getLogin();
+                            String role = teamMember.getRole().toString();
+                            memberDtos.add(new MemberDto(login, role));
+                        }));
             }
+            detailsDto.setMembers(new ArrayList<>(memberDtos));
+
             Set<TaskList> taskListSet = source.getTaskLists();
             if (taskListSet != null) {
                 Integer taskListCount = taskListSet.size();
@@ -85,9 +92,7 @@ public class DtoMapper {
                         .map(taskList -> mapper.map(taskList, TaskListDto.class))
                         .collect(toList()));
             } else {
-                detailsDto.setEpicName("");
                 detailsDto.setEpicDescription("");
-                detailsDto.setMembers(new ArrayList<>());
                 detailsDto.setTotalTasks(0);
                 detailsDto.setTotalTaskList(0);
 
@@ -107,24 +112,6 @@ public class DtoMapper {
 
             // todo здесь будет загрузка объекта Member assigned, пока отправляется только id исполнителя
             destination.setAssigned(source.getAssigned());
-
-            return destination;
-        };
-    }
-
-    private Converter<TaskList, TaskListDto> taskListDtoPostConverter() {
-        return context -> {
-            TaskList source = context.getSource();
-            TaskListDto destination = context.getDestination();
-
-            Set<Task> tasks = source.getTasks();
-            if (tasks != null) {
-                destination.setTasks(tasks.stream()
-                        .map(task -> mapper.map(task, TaskDto.class))
-                        .collect(toList()));
-            } else {
-                destination.setTasks(new ArrayList<>());
-            }
 
             return destination;
         };

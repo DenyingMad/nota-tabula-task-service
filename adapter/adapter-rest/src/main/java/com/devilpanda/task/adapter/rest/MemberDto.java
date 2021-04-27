@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "Участник эпика", parent = EpicDto.class)
+@ApiModel(description = "Участник команды", parent = TeamDto.class)
 public class MemberDto {
     private String login;
     private String role;

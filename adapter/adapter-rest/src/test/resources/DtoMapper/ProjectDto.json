@@ -1,0 +1,38 @@
+{
+  "epics": [
+    {
+      "details": {
+        "epicDescription": "Description of this epic",
+        "epicName": "Epic name",
+        "members": [
+          {
+            "login": "login",
+            "role": "EDIT"
+          }
+        ],
+        "totalTaskList": 1,
+        "totalTasks": 1
+      },
+      "epicId": "9b4c4090-8ff7-11eb-a8b3-0242ac130003",
+      "taskLists": [
+        {
+          "taskListId": 1,
+          "taskListName": "Task List",
+          "tasks": [
+            {
+              "assigned": 517,
+              "priority": "MEDIUM",
+              "status": "DONE",
+              "taskDescription": "Description for task one",
+              "taskId": "9b4c4090-8ff7-11eb-a8b3-0242ac130123",
+              "taskName": "Task 1"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "projectDescription": "descr",
+  "projectId": "9b4c4090-8ff7-11eb-a8b3-0242ac130321",
+  "projectName": "name"
+}

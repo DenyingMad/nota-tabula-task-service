@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/rest/task/{taskUuid}")
+@RequestMapping("/api/rest/project/task/{taskUuid}")
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;

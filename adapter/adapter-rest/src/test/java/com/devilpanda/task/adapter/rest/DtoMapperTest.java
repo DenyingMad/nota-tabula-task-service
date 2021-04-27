@@ -1,6 +1,7 @@
 package com.devilpanda.task.adapter.rest;
 
 import com.devilpanda.task.domain.Epic;
+import com.devilpanda.task.domain.Project;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,6 +39,15 @@ public class DtoMapperTest {
         objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.setDefaultPrettyPrinter(new MyDefaultPrettyPrinter());
+    }
+
+    @Test
+    public void mapDtoFromProject() {
+        Project project = objectFromFile("/DtoMapper/Project.json", Project.class);
+
+        ProjectDto res = mapper.mapDtoFromProject(project);
+
+        assertEqualsToFile("/DtoMapper/ProjectDto.json", res);
     }
 
     @Test

@@ -5,11 +5,15 @@ import com.devilpanda.task.adapter.rest.EpicDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 public class GetAllEpicsControllerIntegrationTest extends AbstractApiIntegrationTest {
     @Test
     public void getAllEpics() throws Exception {
-        EpicDto epic1 = performCreateEpicAndGetResult();
-        EpicDto epic2 = performCreateEpicAndGetResult();
+        UUID projectUuid = UUID.fromString(project.getProjectId());
+
+        EpicDto epic1 = performCreateEpicAndGetResult(projectUuid);
+        EpicDto epic2 = performCreateEpicAndGetResult(projectUuid);
 
         CollectionResponseDto<EpicDto> responseDto = performGetAllEpicsAndGetResult();
 

@@ -16,10 +16,9 @@ import java.util.UUID;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/api/rest/epic")
+@RequestMapping("/api/rest/project/epic")
 @RequiredArgsConstructor
 public class EpicController {
-
     private final EpicService epicService;
     private final TaskService taskService;
     private final DtoMapper mapper;
@@ -29,29 +28,20 @@ public class EpicController {
     // =-----------------------------------------------------
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = EpicDto.class)
-    })
-    @PostMapping()
-    public EpicDto createEpic() {
-        Epic epic = epicService.createEpic();
-        return mapper.mapDtoFromEpic(epic);
-    }
-
-    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = TaskListDto.class)
     })
-    @PostMapping("/{uuid}/task-list")
-    public TaskListDto createTaskList(@PathVariable UUID uuid, @RequestBody String taskListName) {
-        TaskList taskList = epicService.createTaskList(uuid, taskListName);
+    @PostMapping("/{epicUuid}/task-list")
+    public TaskListDto createTaskList(@PathVariable UUID epicUuid, @RequestBody String taskListName) {
+        TaskList taskList = epicService.createTaskList(epicUuid, taskListName);
         return mapper.mapDtoFromTaskList(taskList);
     }
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = TaskDto.class)
     })
-    @PostMapping("/{uuid}/task-list/{taskListId}/task")
-    public TaskDto createTask(@PathVariable UUID uuid, @PathVariable Long taskListId, @RequestBody String taskName) {
-        Task task = taskService.createTask(uuid, taskListId, taskName);
+    @PostMapping("/{epicUuid}/task-list/{taskListId}/task")
+    public TaskDto createTask(@PathVariable UUID epicUuid, @PathVariable Long taskListId, @RequestBody String taskName) {
+        Task task = taskService.createTask(epicUuid, taskListId, taskName);
         return mapper.mapDtoFromTask(task);
     }
 
@@ -68,44 +58,36 @@ public class EpicController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = EpicDto.class)
-    })
-    @GetMapping("/{uuid}")
-    public EpicDto getEpic(@PathVariable UUID uuid) {
-        return null;//epic();
-    }
-
-    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = EpicDto.class),
             @ApiResponse(code = 404, message = "Epic not found", response = String.class)
     })
-    @PutMapping("/{epicId}/rename/{name}")
-    public EpicDto updateName(@PathVariable UUID epicId, @PathVariable String name) {
-        Epic epic = epicService.renameEpic(epicId, name);
+    @PutMapping("/{epicUuid}/rename/{name}")
+    public EpicDto updateName(@PathVariable UUID epicUuid, @PathVariable String name) {
+        Epic epic = epicService.renameEpic(epicUuid, name);
         return mapper.mapDtoFromEpic(epic);
     }
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
-    @DeleteMapping("/{uuid}")
-    public void deleteEpic(@PathVariable UUID uuid) {
-        epicService.deleteEpicByUuid(uuid);
+    @DeleteMapping("/{epicUuid}")
+    public void deleteEpic(@PathVariable UUID epicUuid) {
+        epicService.deleteEpicByUuid(epicUuid);
     }
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
-    @DeleteMapping("/{epicId}/task-list/{taskListId}")
-    public void deleteTaskList(@PathVariable UUID epicId, @PathVariable Long taskListId) {
-        epicService.deleteTaskList(epicId, taskListId);
+    @DeleteMapping("/{epicUuid}/task-list/{taskListId}")
+    public void deleteTaskList(@PathVariable UUID epicUuid, @PathVariable Long taskListId) {
+        epicService.deleteTaskList(epicUuid, taskListId);
     }
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
-    @DeleteMapping("/{epicId}/task-list/{taskListId}/task/{taskId}")
-    public void deleteTask(@PathVariable UUID epicId, @PathVariable Long taskListId, @PathVariable UUID taskId) {
+    @DeleteMapping("/{epicUuid}/task-list/{taskListId}/task/{taskId}")
+    public void deleteTask(@PathVariable UUID epicUuid, @PathVariable Long taskListId, @PathVariable UUID taskId) {
         taskService.deleteTask(taskId);
     }
 }
