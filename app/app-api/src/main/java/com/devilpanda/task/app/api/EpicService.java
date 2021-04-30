@@ -15,6 +15,8 @@ public interface EpicService {
 
     Epic renameEpic(UUID epicUuid, String name);
 
+    TaskList renameTaskList(UUID epicUuid, Long taskListId, String name);
+
     void deleteEpicByUuid(UUID epicUuid);
 
     void deleteTaskList(UUID epicUuid, Long taskListId);

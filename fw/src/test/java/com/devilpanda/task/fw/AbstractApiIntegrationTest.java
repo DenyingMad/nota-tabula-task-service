@@ -179,6 +179,18 @@ public class AbstractApiIntegrationTest {
         });
     }
 
+    protected ResultActions performRenameTaskList(UUID epicUuid, Long taskListId, String name) throws Exception {
+        return this.mvc.perform(put(BASE_URL + "/epic/" + epicUuid + "/task-list/" + taskListId + "/rename/"+ name));
+    }
+
+    protected TaskListDto performRenameTaskListAndGetResult(UUID epicUuid, Long taskListId, String name) throws Exception {
+        MockHttpServletResponse response = performRenameTaskList(epicUuid, taskListId, name)
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
     // =-----------------------------------------------------
     // Implementation
     // =-----------------------------------------------------

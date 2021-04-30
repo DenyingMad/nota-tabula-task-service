@@ -60,6 +60,26 @@ public class EpicServiceImpl implements EpicService {
         return epicRepository.findAll();
     }
 
+    @Override
+    public Epic renameEpic(UUID epicUuid, String name) {
+        Epic epic = epicRepository.findByUuid(epicUuid)
+                .orElseThrow(() -> new ElementNotFoundException(epicUuid));
+
+        epic.setName(name);
+
+        return epicRepository.saveAndFlush(epic);
+    }
+
+    @Override
+    public TaskList renameTaskList(UUID epicUuid, Long taskListId, String name) {
+        TaskList taskList = taskListRepository.findByEpic_UuidAndId(epicUuid, taskListId)
+                .orElseThrow(()-> new ElementNotFoundException(taskListId));
+
+        taskList.setName(name);
+
+        return taskListRepository.saveAndFlush(taskList);
+    }
+
     @Transactional
     @Override
     public void deleteEpicByUuid(UUID epicUuid) {
@@ -70,15 +90,5 @@ public class EpicServiceImpl implements EpicService {
     @Override
     public void deleteTaskList(UUID epicUuid, Long taskListId) {
         taskListRepository.deleteTaskListByEpic_UuidAndId(epicUuid, taskListId);
-    }
-
-    @Override
-    public Epic renameEpic(UUID epicUuid, String name) {
-        Epic epic = epicRepository.findByUuid(epicUuid)
-                .orElseThrow(() -> new ElementNotFoundException(epicUuid));
-
-        epic.setName(name);
-
-        return epicRepository.saveAndFlush(epic);
     }
 }
