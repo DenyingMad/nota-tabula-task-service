@@ -70,14 +70,12 @@ public class EpicServiceImpl implements EpicService {
         return epicRepository.saveAndFlush(epic);
     }
 
+    @Transactional
     @Override
-    public TaskList renameTaskList(UUID epicUuid, Long taskListId, String name) {
+    public void renameTaskList(UUID epicUuid, Long taskListId, String name) {
         TaskList taskList = taskListRepository.findByEpic_UuidAndId(epicUuid, taskListId)
-                .orElseThrow(()-> new ElementNotFoundException(taskListId));
-
+                .orElseThrow(()-> new ElementNotFoundException(epicUuid, taskListId));
         taskList.setName(name);
-
-        return taskListRepository.saveAndFlush(taskList);
     }
 
     @Transactional
