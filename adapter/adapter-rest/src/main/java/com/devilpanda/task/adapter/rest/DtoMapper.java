@@ -70,7 +70,7 @@ public class DtoMapper {
             detailsDto.setEpicDescription(source.getDescription());
 
             Set<MemberDto> memberDtos = new HashSet<>();
-            if(source.getTeams() != null) {
+            if (source.getTeams() != null) {
                 source.getTeams().forEach(team -> team.getMembers()
                         .forEach(teamMember -> {
                             String login = teamMember.getMember().getLogin();
