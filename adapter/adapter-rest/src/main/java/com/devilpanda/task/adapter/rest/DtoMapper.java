@@ -32,7 +32,8 @@ public class DtoMapper {
         mapper.typeMap(Member.class, MemberDto.class);
         mapper.typeMap(TaskList.class, TaskListDto.class)
                 .addMapping(TaskList::getId, TaskListDto::setTaskListId)
-                .addMapping(TaskList::getName, TaskListDto::setTaskListName);
+                .addMapping(TaskList::getName, TaskListDto::setTaskListName)
+                .setPostConverter(taskListDtoPostConverter());
         mapper.typeMap(Task.class, TaskDto.class)
                 .addMapping(Task::getUuid, TaskDto::setTaskId)
                 .addMapping(Task::getName, TaskDto::setTaskName)
@@ -70,7 +71,7 @@ public class DtoMapper {
             detailsDto.setEpicDescription(source.getDescription());
 
             Set<MemberDto> memberDtos = new HashSet<>();
-            if(source.getTeams() != null) {
+            if (source.getTeams() != null) {
                 source.getTeams().forEach(team -> team.getMembers()
                         .forEach(teamMember -> {
                             String login = teamMember.getMember().getLogin();
@@ -119,6 +120,24 @@ public class DtoMapper {
                 MemberDto assignedDto = mapper.map(assigned, MemberDto.class);
                 destination.setAssigned(assignedDto);
             }
+            return destination;
+        };
+    }
+
+    private Converter<TaskList, TaskListDto> taskListDtoPostConverter() {
+        return context -> {
+            TaskList source = context.getSource();
+            TaskListDto destination = context.getDestination();
+
+            Set<Task> tasks = source.getTasks();
+            if (tasks != null) {
+                destination.setTasks(tasks.stream()
+                        .map(task -> mapper.map(task, TaskDto.class))
+                        .collect(toList()));
+            } else {
+                destination.setTasks(new ArrayList<>());
+            }
+
             return destination;
         };
     }
