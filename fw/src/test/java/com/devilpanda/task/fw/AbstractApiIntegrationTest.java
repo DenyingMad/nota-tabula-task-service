@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.lang.reflect.Type;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -106,6 +107,14 @@ public class AbstractApiIntegrationTest {
         });
     }
 
+    protected CollectionResponseDto<ProjectDto> performGetAllProjectsAndGetResult() throws Exception {
+        MockHttpServletResponse response = this.mvc.perform(get(BASE_URL))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
     protected ResultActions performGetTask(UUID taskUuid) throws Exception {
         return this.mvc.perform(get(BASE_URL + "/task/" + taskUuid));
     }
@@ -116,6 +125,10 @@ public class AbstractApiIntegrationTest {
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
+    }
+
+    protected ResultActions performDeleteProject(UUID projectUuid) throws Exception {
+        return this.mvc.perform(delete(BASE_URL + "/" + projectUuid));
     }
 
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {

@@ -5,7 +5,9 @@ import com.devilpanda.task.app.api.ProjectService;
 import com.devilpanda.task.domain.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -20,5 +22,17 @@ public class ProjectServiceImpl implements ProjectService {
         project.setName("New project");
 
         return projectRepository.saveAndFlush(project);
+    }
+
+    @Override
+    public List<Project> getAllProjects() {
+        // todo возвращать только те проекты, к которым текущий пользователь иммет доступ
+        return projectRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public void deleteProjectByUuid(UUID projectUuid) {
+        projectRepository.deleteProjectByUuid(projectUuid);
     }
 }

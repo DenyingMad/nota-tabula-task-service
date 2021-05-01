@@ -3,6 +3,7 @@ package com.devilpanda.task.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -13,11 +14,13 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "PROJECT")
-public class Project extends BaseEntity{
+public class Project extends BaseEntity {
     private UUID uuid;
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
     private Set<Epic> epics;
 }
