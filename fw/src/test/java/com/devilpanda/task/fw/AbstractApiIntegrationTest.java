@@ -1,5 +1,6 @@
 package com.devilpanda.task.fw;
 
+import com.devilpanda.task.adapter.jpa.TaskListRepository;
 import com.devilpanda.task.adapter.rest.dto.*;
 import com.devilpanda.task.domain.TaskPriority;
 import com.devilpanda.task.domain.TaskStatus;
@@ -36,6 +37,8 @@ public class AbstractApiIntegrationTest {
     protected MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    protected TaskListRepository taskListRepository;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -177,6 +180,10 @@ public class AbstractApiIntegrationTest {
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
+    }
+
+    protected ResultActions performRenameTaskList(UUID epicUuid, Long taskListId, String name) throws Exception {
+        return this.mvc.perform(put(BASE_URL + "/epic/" + epicUuid + "/task-list/" + taskListId + "/rename/"+ name));
     }
 
     // =-----------------------------------------------------

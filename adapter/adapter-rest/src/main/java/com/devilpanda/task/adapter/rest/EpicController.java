@@ -72,6 +72,15 @@ public class EpicController {
     }
 
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = TaskListDto.class),
+            @ApiResponse(code = 404, message = "Task List not found", response = String.class)
+    })
+    @PutMapping("/{epicUuid}/task-list/{taskListId}/rename/{name}")
+    public void updateTaskListName(@PathVariable UUID epicUuid, @PathVariable Long taskListId, @PathVariable String name) {
+        epicService.renameTaskList(epicUuid, taskListId, name);
+    }
+
+    @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK")
     })
     @DeleteMapping("/{epicUuid}")
