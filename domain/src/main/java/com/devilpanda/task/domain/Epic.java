@@ -19,7 +19,7 @@ public class Epic extends BaseEntity {
     private String description;
 
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "projectid")
     private Project project;
 

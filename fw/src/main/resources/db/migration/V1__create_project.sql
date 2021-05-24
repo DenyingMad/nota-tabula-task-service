@@ -2,7 +2,9 @@ CREATE TABLE PROJECT
 (
     id          BIGSERIAL NOT NULL,
     uuid        UUID      NOT NULL,
-    name        varchar   NOT NULL,
-    description varchar,
+    name        VARCHAR   NOT NULL,
+    description VARCHAR,
+    isPersonal  BOOLEAN,
+    ownerId     VARCHAR   NOT NULL,
     PRIMARY KEY (id)
 );

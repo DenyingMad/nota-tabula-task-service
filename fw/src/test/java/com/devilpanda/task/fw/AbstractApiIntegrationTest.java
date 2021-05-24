@@ -52,7 +52,8 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performCreateProject() throws Exception {
-        return this.mvc.perform(post(BASE_URL));
+        return this.mvc.perform(post(BASE_URL)
+                .header("userLogin", "user"));
     }
 
     protected ProjectDto performCreateProjectAndGetResult() throws Exception {

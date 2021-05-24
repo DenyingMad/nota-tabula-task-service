@@ -17,6 +17,7 @@
     <modules>
         <module>adapter-rest</module>
         <module>adapter-jpa</module>
+        <module>adapter-users</module>
     </modules>
 
 </project>

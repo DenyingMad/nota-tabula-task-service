@@ -1,5 +1,6 @@
 package com.devilpanda.task.adapter.rest;
 
+import com.devilpanda.task.adapter.rest.dto.CollectionResponseDto;
 import com.devilpanda.task.adapter.rest.dto.EpicDto;
 import com.devilpanda.task.adapter.rest.dto.ProjectDto;
 import com.devilpanda.task.app.api.EpicService;
@@ -9,12 +10,12 @@ import com.devilpanda.task.domain.Project;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/rest/project")
@@ -32,8 +33,8 @@ public class ProjectController {
             @ApiResponse(code = 200, message = "OK", response = ProjectDto.class)
     })
     @PostMapping()
-    public ProjectDto createProject() {
-        Project project = projectService.createProject();
+    public ProjectDto createProject(@RequestHeader("userLogin") String ownerId) {
+        Project project = projectService.createProject(ownerId);
         return mapper.mapDtoFromProject(project);
     }
 
@@ -44,5 +45,32 @@ public class ProjectController {
     public EpicDto createEpic(@PathVariable UUID projectUuid) {
         Epic epic = epicService.createEpic(projectUuid);
         return mapper.mapDtoFromEpic(epic);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = CollectionResponseDto.class)
+    })
+    @GetMapping("/user/personal")
+    public CollectionResponseDto<ProjectDto> getPersonalProjects(@RequestHeader String userLogin) {
+        List<Project> projects = projectService.getAllPersonalProjects(userLogin);
+        return new CollectionResponseDto<>(projects.stream()
+                .map(mapper::mapDtoFromProject)
+                .collect(toList()));
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = CollectionResponseDto.class)
+    })
+    @GetMapping("/user/organization")
+    public CollectionResponseDto<ProjectDto> getOrganizationProjectsWhereUserIsMember(@RequestHeader String userLogin) {
+        List<Project> projects = projectService.getAllOrganizationProjectsWhereUserIsMember(userLogin);
+        return new CollectionResponseDto<>(projects.stream()
+                .map(mapper::mapDtoFromProject)
+                .collect(toList()));
+    }
+
+    @GetMapping("/user/current")
+    public CollectionResponseDto<ProjectDto> getOrganizationProjectsInWork() {
+        return null;
     }
 }
