@@ -3,10 +3,7 @@ package com.devilpanda.task.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 import java.util.Set;
 
@@ -14,7 +11,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "PROJECT")
-public class Project extends BaseEntity{
+public class Project extends BaseEntity {
     private UUID uuid;
     private String name;
     private String description;
@@ -23,6 +20,8 @@ public class Project extends BaseEntity{
     @Column(name = "ispersonal")
     private Boolean isPersonal;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
     private Set<Epic> epics;
 }
