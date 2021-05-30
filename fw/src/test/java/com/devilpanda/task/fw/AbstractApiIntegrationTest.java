@@ -152,6 +152,10 @@ public class AbstractApiIntegrationTest {
         });
     }
 
+    protected ResultActions performDeleteProject(UUID projectUuid) throws Exception {
+        return this.mvc.perform(delete(BASE_URL + "/" + projectUuid));
+    }
+
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
         return this.mvc.perform(delete(BASE_URL + "/epic/" + uuid));
     }

@@ -41,4 +41,10 @@ public class ProjectServiceImpl implements ProjectService {
         });
         return projectList;
     }
+
+    @Transactional
+    @Override
+    public void deleteProjectByUuid(UUID projectUuid) {
+        projectRepository.deleteProjectByUuid(projectUuid);
+    }
 }

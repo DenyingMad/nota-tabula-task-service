@@ -80,6 +80,14 @@ public class ProjectController {
         return null;
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")
+    })
+    @DeleteMapping("/{projectUuid}")
+    public void deleteProject(@PathVariable UUID projectUuid) {
+        projectService.deleteProjectByUuid(projectUuid);
+    }
+
     // =-----------------------------------------------------
     // = Impl
     // =-----------------------------------------------------
