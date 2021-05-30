@@ -5,7 +5,7 @@ import com.devilpanda.task.domain.Project;
 import java.util.List;
 
 public interface ProjectService {
-    Project createProject(String ownerId);
+    Project createProject(String ownerId, Project project);
 
     List<Project> getAllPersonalProjects(String userLogin);
 

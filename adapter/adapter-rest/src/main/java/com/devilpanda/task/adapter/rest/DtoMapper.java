@@ -39,10 +39,17 @@ public class DtoMapper {
                 .addMapping(Task::getName, TaskDto::setTaskName)
                 .addMapping(Task::getDescription, TaskDto::setTaskDescription)
                 .setPostConverter(taskDtoPostConverter());
+        mapper.typeMap(ProjectDto.class, Project.class)
+                .addMapping(ProjectDto::getProjectName, Project::setName)
+                .addMapping(ProjectDto::getProjectDescription, Project::setDescription);
     }
 
     public ProjectDto mapDtoFromProject(Project source) {
         return mapper.map(source, ProjectDto.class);
+    }
+
+    public Project mapProjectFromDto(ProjectDto source) {
+        return mapper.map(source, Project.class);
     }
 
     public EpicDto mapDtoFromEpic(Epic source) {

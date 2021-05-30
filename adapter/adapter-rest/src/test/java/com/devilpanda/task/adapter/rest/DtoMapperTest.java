@@ -52,6 +52,15 @@ public class DtoMapperTest {
     }
 
     @Test
+    public void mapProjectFromDto() {
+        ProjectDto projectDto = objectFromFile("/DtoMapper/ProjectCreateRequestDto.json", ProjectDto.class);
+
+        Project res = mapper.mapProjectFromDto(projectDto);
+
+        assertEqualsToFile("/DtoMapper/Project_empty.json", res);
+    }
+
+    @Test
     public void mapDtoFromEpic_full() {
         Epic epic = objectFromFile("/DtoMapper/Epic_full.json", Epic.class);
 

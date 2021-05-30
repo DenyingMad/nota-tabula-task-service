@@ -15,5 +15,5 @@ public class ProjectDto {
     private String projectId;
     private String projectName;
     private String projectDescription;
-    private List<EpicDto> epics;
+    private Boolean isPersonal;
 }
