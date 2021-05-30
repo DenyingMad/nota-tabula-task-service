@@ -40,7 +40,7 @@ public class ProjectController {
             return mapper.mapDtoFromProject(project);
         } else {
             throw new IllegalArgumentException("Invalid project create request -> " + "OwnerId: " + ownerId
-                    + "Request: " + projectCreateRequest);
+                    + "\nRequest: " + projectCreateRequest);
         }
     }
 
@@ -85,6 +85,6 @@ public class ProjectController {
     // =-----------------------------------------------------
 
     private boolean isProjectCreateRequestValid(ProjectDto projectCreateRequest) {
-        return projectCreateRequest.getProjectName() != null;
+        return !projectCreateRequest.getProjectName().isEmpty();
     }
 }
