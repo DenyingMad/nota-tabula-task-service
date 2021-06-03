@@ -26,4 +26,11 @@ public class RestExceptionHandler {
         LOGGER.trace(e.getMessage(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException e) {
+        LOGGER.error(e.getMessage());
+        LOGGER.trace(e.getMessage(), e);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
 }

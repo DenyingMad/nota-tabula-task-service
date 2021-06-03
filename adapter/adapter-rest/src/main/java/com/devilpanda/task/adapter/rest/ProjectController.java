@@ -33,9 +33,15 @@ public class ProjectController {
             @ApiResponse(code = 200, message = "OK", response = ProjectDto.class)
     })
     @PostMapping()
-    public ProjectDto createProject(@RequestHeader("userLogin") String ownerId) {
-        Project project = projectService.createProject(ownerId);
-        return mapper.mapDtoFromProject(project);
+    public ProjectDto createProject(@RequestHeader("userLogin") String ownerId,
+                                    @RequestBody ProjectDto projectCreateRequest) {
+        if (isProjectCreateRequestValid(projectCreateRequest)) {
+            Project project = projectService.createProject(ownerId, mapper.mapProjectFromDto(projectCreateRequest));
+            return mapper.mapDtoFromProject(project);
+        } else {
+            throw new IllegalArgumentException("Invalid project create request -> " + "OwnerId: " + ownerId
+                    + "\nRequest: " + projectCreateRequest);
+        }
     }
 
     @ApiResponses(value = {
@@ -48,7 +54,7 @@ public class ProjectController {
     }
 
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = CollectionResponseDto.class)
+            @ApiResponse(code = 200, message = "OK")
     })
     @GetMapping("/user/personal")
     public CollectionResponseDto<ProjectDto> getPersonalProjects(@RequestHeader String userLogin) {
@@ -72,5 +78,21 @@ public class ProjectController {
     @GetMapping("/user/current")
     public CollectionResponseDto<ProjectDto> getOrganizationProjectsInWork() {
         return null;
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")
+    })
+    @DeleteMapping("/{projectUuid}")
+    public void deleteProject(@PathVariable UUID projectUuid) {
+        projectService.deleteProjectByUuid(projectUuid);
+    }
+
+    // =-----------------------------------------------------
+    // = Impl
+    // =-----------------------------------------------------
+
+    private boolean isProjectCreateRequestValid(ProjectDto projectCreateRequest) {
+        return !projectCreateRequest.getProjectName().isEmpty();
     }
 }

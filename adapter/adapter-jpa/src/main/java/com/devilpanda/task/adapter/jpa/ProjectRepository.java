@@ -13,4 +13,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT p FROM Project p WHERE p.isPersonal = :isPersonal AND p.ownerId = :ownerId")
     List<Project> findProjectsByOwner(String ownerId, Boolean isPersonal);
+
+    void deleteProjectByUuid(UUID uuid);
 }

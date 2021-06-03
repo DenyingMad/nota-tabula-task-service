@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +28,9 @@ public class AbstractApiIntegrationTest {
     private static final String BASE_URL = "/api/rest/project";
     protected static final String TASK_LIST_NAME = "Task List #1";
     protected static final String TASK_NAME = "Task #1";
+    protected static final String PROJECT_NAME = "Project #1";
+    protected static final String PROJECT_DESCRIPTION = "Project description";
+    protected static final String USER_LOGIN_IVANOV = "ivanov";
 
     protected ProjectDto project;
     protected EpicDto epic;
@@ -42,7 +46,7 @@ public class AbstractApiIntegrationTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        project = performCreateProjectAndGetResult();
+        project = performCreateProjectAndGetResult(getProjectCreateRequest(), USER_LOGIN_IVANOV);
         epic = performCreateEpicAndGetResult(UUID.fromString(project.getProjectId()));
         UUID epicUuid = UUID.fromString(epic.getEpicId());
 
@@ -51,18 +55,44 @@ public class AbstractApiIntegrationTest {
         task = performCreateTaskAndGetResponse(epicUuid, taskList.getTaskListId(), TASK_NAME);
     }
 
-    protected ResultActions performCreateProject() throws Exception {
+    // =-----------------------------------------------------
+    // = Projects
+    // =-----------------------------------------------------
+
+    protected ResultActions performCreateProject(ProjectDto projectCreationRequest, String ownerId) throws Exception {
+        String content = objectMapper.writeValueAsString(projectCreationRequest);
         return this.mvc.perform(post(BASE_URL)
-                .header("userLogin", "user"));
+                .header("userLogin", ownerId)
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON)
+        );
     }
 
-    protected ProjectDto performCreateProjectAndGetResult() throws Exception {
-        MockHttpServletResponse response = performCreateProject()
+    protected ProjectDto performCreateProjectAndGetResult(ProjectDto projectCreationRequest, String ownerId) throws Exception {
+        MockHttpServletResponse response = performCreateProject(projectCreationRequest, ownerId)
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
     }
+
+    private ResultActions performGetPersonalProjects(String ownerId) throws Exception {
+        return this.mvc.perform(get(BASE_URL + "/user/personal")
+                .header("userLogin", ownerId));
+    }
+
+    protected CollectionResponseDto<ProjectDto> performGetPersonalProjectsAndGetResult(String ownerId) throws Exception {
+        MockHttpServletResponse response = performGetPersonalProjects(ownerId)
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+        return getDtoFromResponse(response, new TypeReference<>() {
+        });
+    }
+
+    // =-----------------------------------------------------
+    // = Epics
+    // =-----------------------------------------------------
+
 
     protected ResultActions performCreateEpic(UUID projectUuid) throws Exception {
         return this.mvc.perform(post(BASE_URL + "/" + projectUuid + "/epic"));
@@ -120,6 +150,10 @@ public class AbstractApiIntegrationTest {
                 .andReturn().getResponse();
         return getDtoFromResponse(response, new TypeReference<>() {
         });
+    }
+
+    protected ResultActions performDeleteProject(UUID projectUuid) throws Exception {
+        return this.mvc.perform(delete(BASE_URL + "/" + projectUuid));
     }
 
     protected ResultActions performDeleteEpicByUuid(UUID uuid) throws Exception {
@@ -184,7 +218,7 @@ public class AbstractApiIntegrationTest {
     }
 
     protected ResultActions performRenameTaskList(UUID epicUuid, Long taskListId, String name) throws Exception {
-        return this.mvc.perform(put(BASE_URL + "/epic/" + epicUuid + "/task-list/" + taskListId + "/rename/"+ name));
+        return this.mvc.perform(put(BASE_URL + "/epic/" + epicUuid + "/task-list/" + taskListId + "/rename/" + name));
     }
 
     // =-----------------------------------------------------
@@ -194,5 +228,13 @@ public class AbstractApiIntegrationTest {
     private <T> T getDtoFromResponse(MockHttpServletResponse response, TypeReference<T> dtoClass) throws Exception {
         String json = response.getContentAsString();
         return objectMapper.readValue(json, dtoClass);
+    }
+
+    protected ProjectDto getProjectCreateRequest() {
+        ProjectDto projectCreateRequest = new ProjectDto();
+        projectCreateRequest.setProjectName(PROJECT_NAME);
+        projectCreateRequest.setProjectDescription(PROJECT_DESCRIPTION);
+        projectCreateRequest.setIsPersonal(true);
+        return projectCreateRequest;
     }
 }

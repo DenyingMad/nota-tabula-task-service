@@ -19,12 +19,9 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
 
     @Override
-    public Project createProject(String ownerId) {
-        Project project = new Project();
+    public Project createProject(String ownerId, Project project) {
         project.setUuid(UUID.randomUUID());
-        project.setName("New project");
         project.setOwnerId(ownerId);
-
         return projectRepository.saveAndFlush(project);
     }
 
@@ -38,11 +35,16 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getAllOrganizationProjectsWhereUserIsMember(String userLogin) {
         List<String> organizationNames = usersService.getOrganizationsNames(userLogin);
 
-
         List<Project> projectList = new ArrayList<>();
         organizationNames.forEach(ownerName -> {
             projectList.addAll(projectRepository.findProjectsByOwner(ownerName, false));
         });
         return projectList;
+    }
+
+    @Transactional
+    @Override
+    public void deleteProjectByUuid(UUID projectUuid) {
+        projectRepository.deleteProjectByUuid(projectUuid);
     }
 }
